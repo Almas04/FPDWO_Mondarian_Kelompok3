@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<Schema name="dwo">
+<!--
+  == This software is subject to the terms of the Eclipse Public License v1.0
+  == Agreement, available at the following URL:
+  == http://www.eclipse.org/legal/epl-v10.html.
+  == You must accept the terms of that agreement to use this software.
+  ==
+  == Copyright (C) 2000-2005 Julian Hyde
+  == Copyright (C) 2005-2011 Pentaho and others
+  == All Rights Reserved.
+  -->
+
+<!-- Shared dimensions -->
+
+
+
+<!-- Sales -->
+<Cube name="salesfact" defaultMeasure="Amount">
+  <!-- Use annotations to provide translations of this cube's caption and
+       description into German and French. Use of annotations in this manner is
+       experimental and unsupported; just for testing right now. -->
+
+  <Table name="SalesFact"/>
+
+  <Dimension name="Store" foreignKey="BusinessEntityID">
+    <Hierarchy hasAll="true" allMemberName="All Store" primaryKey="BusinessEntitylD">
+      <Table name="Store" />
+      <Level name="Nama Gudang" column="StoreName"/>
+    </Hierarchy>
+
+  </Dimension>
+
+
+  <Dimension name="Time" foreignKey="TimeID">
+    <Hierarchy hasAll="true" allMemberName="All Times" primaryKey="TimeID">
+      <Table name="Time" />
+      <Level name="Year" column="Year" type="String" uniqueMembers="true" levelType="TimeYears"/>
+      <Level name="Month" column="Month" uniqueMembers="false" type="String" levelType="TimeMonths"/>
+      <Level name="Date" column="Date" uniqueMembers="false" type="String" levelType="TimeDays"/>
+    </Hierarchy>
+
+  </Dimension>
+
+
+  <Dimension name="Customer" foreignKey="CustomerID">
+    <Hierarchy hasAll="true" allMemberName="All Customer" primaryKey="CustomerID">
+      <Table name="Customer" />
+      <Level name="Account Number" column="AccountNumber"/>
+    </Hierarchy>
+
+  </Dimension>
+
+
+  <Dimension name="Product" foreignKey ="ProductID">
+      <Hierarchy hasAll="true" allMemberName="All Product" primaryKey ="ProductID">
+      <Table name="Product"/>
+      <Level name="Product Name" column="ProductName"/>
+      </Hierarchy>
+
+  </Dimension>
+
+
+
+  <Measure name="Amount" column="OrderQty" aggregator="sum"
+      formatString="Standard"/>
+
+
+
+</Cube>
+
+
+
+</Schema>
